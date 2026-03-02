@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+#define MAX 200
+
+long long stack[MAX];
+int top = -1;
+
+void push(long long val) {
+    stack[++top] = val;
+}
+
+long long pop() {
+    return stack[top--];
+}
+
+long long power(long long a, long long b) {
+    long long result = 1;
+    while (b > 0) {
+        result *= a;
+        b--;
+    }
+    return result;
+}
+
+int main() {
+    char input[201];
+    fgets(input, sizeof(input), stdin);
+
+    char *token = strtok(input, " \n");
+
+    while (token != NULL) {
+
+        if ((token[0] >= '0' && token[0] <= '9')) {
+            push(atoll(token));
+        } else {
+            long long b = pop();
+            long long a = pop();
+            long long result = 0;
+
+            if (token[0] == '+') result = a + b;
+            else if (token[0] == '-') result = a - b;
+            else if (token[0] == '*') result = a * b;
+            else if (token[0] == '/') result = a / b;
+            else if (token[0] == '^') result = power(a, b);
+
+            push(result);
+        }
+
+        token = strtok(NULL, " \n");
+    }
+
+    printf("%lld\n", pop());
+    return 0;
+}
