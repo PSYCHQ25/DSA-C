@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX 200
+
+long long stack[MAX];
+int top = -1;
+
+void push(long long val) {
+    stack[++top] = val;
+}
+
+long long pop() {
+    return stack[top--];
+}
+
+long long power(long long a, long long b) {
+    long long res = 1;
+    while (b > 0) {
+        res *= a;
+        b--;
+    }
+    return res;
+}
+
+int main() {
+    char input[201];
+    fgets(input, sizeof(input), stdin);
+
+    // Split tokens
+    char *tokens[100];
+    int count = 0;
+    char *token = strtok(input, " \n");
+    while (token != NULL) {
+        tokens[count++] = token;
+        token = strtok(NULL, " \n");
+    }
+
+    // Traverse from right to left
+    for (int i = count - 1; i >= 0; i--) {
+        if (isdigit(tokens[i][0])) {  // operand
+            push(atoll(tokens[i]));
+        } else {  // operator
+            long long a = pop();
+            long long b = pop();
+            long long res = 0;
+
+            if (tokens[i][0] == '+') res = a + b;
+            else if (tokens[i][0] == '-') res = a - b;
+            else if (tokens[i][0] == '*') res = a * b;
+            else if (tokens[i][0] == '/') res = a / b;
+            else if (tokens[i][0] == '^') res = power(a, b);
+
+            push(res);
+        }
+    }
+
+    printf("%lld\n", pop());
+    return 0;
+}
