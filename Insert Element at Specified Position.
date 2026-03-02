@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+int main() {
+    int N, X, P;
+    int arr[101];  // Size 101 to allow one extra insertion
+
+    // Read size
+    scanf("%d", &N);
+
+    // Read array elements
+    for(int i = 0; i < N; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    // Read element to insert
+    scanf("%d", &X);
+
+    // Read position
+    scanf("%d", &P);
+
+    // Shift elements to the right from position P
+    for(int i = N; i > P; i--) {
+        arr[i] = arr[i - 1];
+    }
+
+    // Insert element
+    arr[P] = X;
+
+    // Print updated array
+    for(int i = 0; i <= N; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
+
+
