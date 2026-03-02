@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
+int main() {
+    int N1, N2, Q;
+    scanf("%d %d", &N1, &N2);
+
+    int stack1[N1], stack2[N2];
+    int top1 = -1, top2 = -1; // top pointers for both stacks
+
+    scanf("%d", &Q);
+    char op[10];
+    int S, X;
+
+    for(int i = 0; i < Q; i++) {
+        scanf("%s", op);
+
+        if(op[0] == 'P' && op[1] == 'U') { // PUSH
+            scanf("%d %d", &S, &X);
+            if(S == 1) {
+                if(top1 == N1 - 1)
+                    printf("Overflow\n");
+                else
+                    stack1[++top1] = X;
+            } else {
+                if(top2 == N2 - 1)
+                    printf("Overflow\n");
+                else
+                    stack2[++top2] = X;
+            }
+        } 
+        else if(op[0] == 'P' && op[1] == 'O') { // POP
+            scanf("%d", &S);
+            if(S == 1) {
+                if(top1 == -1)
+                    printf("Underflow\n");
+                else
+                    printf("%d\n", stack1[top1--]);
+            } else {
+                if(top2 == -1)
+                    printf("Underflow\n");
+                else
+                    printf("%d\n", stack2[top2--]);
+            }
+        } 
+        else if(op[0] == 'P' && op[1] == 'E') { // PEEK
+            scanf("%d", &S);
+            if(S == 1) {
+                if(top1 == -1)
+                    printf("Underflow\n");
+                else
+                    printf("%d\n", stack1[top1]);
+            } else {
+                if(top2 == -1)
+                    printf("Underflow\n");
+                else
+                    printf("%d\n", stack2[top2]);
+            }
+        } 
+        else if(op[0] == 'D') { // DISPLAY
+            scanf("%d", &S);
+            if(S == 1) {
+                if(top1 == -1)
+                    printf("Empty\n");
+                else {
+                    for(int j = top1; j >= 0; j--) {
+                        printf("%d", stack1[j]);
+                        if(j > 0) printf(" ");
+                    }
+                    printf("\n");
+                }
+            } else {
+                if(top2 == -1)
+                    printf("Empty\n");
+                else {
+                    for(int j = top2; j >= 0; j--) {
+                        printf("%d", stack2[j]);
+                        if(j > 0) printf(" ");
+                    }
+                    printf("\n");
+                }
+            }
+        }
+    }
+
+    return 0;
+}
+
