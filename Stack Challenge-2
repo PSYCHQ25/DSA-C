@@ -1,0 +1,91 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+int main() {
+    int S, N;
+    int stack[100];
+    int top = -1;
+
+    // Read stack size
+    scanf("%d", &S);
+
+    // Read number of initial elements
+    scanf("%d", &N);
+
+    // Push initial elements
+    for(int i = 0; i < N; i++) {
+        int value;
+        scanf("%d", &value);
+
+        if(top == S - 1) {
+            printf("Overflow\n");
+        } else {
+            stack[++top] = value;
+        }
+    }
+
+    // Function-like pop logic macro style (manual handling below)
+
+    // 1. Pop 2 elements
+    for(int i = 0; i < 2; i++) {
+        if(top == -1) {
+            printf("Underflow\n");
+        } else {
+            printf("Popped: %d\n", stack[top--]);
+        }
+    }
+
+    // 2. Push 4 elements
+    for(int i = 0; i < 4; i++) {
+        int value;
+        scanf("%d", &value);
+
+        if(top == S - 1) {
+            printf("Overflow\n");
+        } else {
+            stack[++top] = value;
+        }
+    }
+
+    // 3. Pop 1 element
+    if(top == -1) {
+        printf("Underflow\n");
+    } else {
+        printf("Popped: %d\n", stack[top--]);
+    }
+
+    // 4. Push 2 elements
+    for(int i = 0; i < 2; i++) {
+        int value;
+        scanf("%d", &value);
+
+        if(top == S - 1) {
+            printf("Overflow\n");
+        } else {
+            stack[++top] = value;
+        }
+    }
+
+    // 5. Pop 3 elements
+    for(int i = 0; i < 3; i++) {
+        if(top == -1) {
+            printf("Underflow\n");
+        } else {
+            printf("Popped: %d\n", stack[top--]);
+        }
+    }
+
+    // Final Stack Display
+    if(top == -1) {
+        printf("Stack is Empty");
+    } else {
+        for(int i = top; i >= 0; i--) {
+            printf("%d ", stack[i]);
+        }
+    }
+
+    return 0;
+}
