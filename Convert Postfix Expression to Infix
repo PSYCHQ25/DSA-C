@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX 1000
+
+// Stack to store strings
+char stack[MAX][MAX];
+int top = -1;
+
+// Push string onto stack
+void push(char *str) {
+    strcpy(stack[++top], str);
+}
+
+// Pop string from stack
+char* pop() {
+    return stack[top--];
+}
+
+int main() {
+    char input[MAX];
+    fgets(input, sizeof(input), stdin);
+
+    char *token = strtok(input, " \n");
+
+    while (token != NULL) {
+        // If operand (letter or digit)
+        if (isalnum(token[0])) {
+            push(token);
+        }
+        // If operator
+        else {
+            char right[MAX], left[MAX], temp[MAX];
+
+            strcpy(right, pop());
+            strcpy(left, pop());
+
+            // Create fully parenthesized expression
+            sprintf(temp, "(%s%c%s)", left, token[0], right);
+
+            push(temp);
+        }
+
+        token = strtok(NULL, " \n");
+    }
+
+    printf("%s\n", stack[top]);
+
+    return 0;
+}
