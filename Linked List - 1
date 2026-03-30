@@ -1,0 +1,127 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+
+// Create new node
+struct Node* createNode(int data) {
+    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+    temp->data = data;
+    temp->next = NULL;
+    return temp;
+}
+
+// Insert at beginning
+void insertBeginning(int data) {
+    struct Node* newNode = createNode(data);
+    newNode->next = head;
+    head = newNode;
+}
+
+// Insert at end
+void insertEnd(int data) {
+    struct Node* newNode = createNode(data);
+
+    if (head == NULL) {
+        head = newNode;
+        return;
+    }
+
+    struct Node* temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+}
+
+// Delete at position (1-based)
+void deleteAtPosition(int pos) {
+    if (head == NULL)
+        return;
+
+    if (pos == 1) {
+        head = head->next;
+        return;
+    }
+
+    struct Node* temp = head;
+
+    for (int i = 1; i < pos - 1 && temp->next != NULL; i++) {
+        temp = temp->next;
+    }
+
+    if (temp->next != NULL)
+        temp->next = temp->next->next;
+}
+
+// Insert at position (1-based)
+void insertAtPosition(int pos, int data) {
+    if (pos == 1) {
+        insertBeginning(data);
+        return;
+    }
+
+    struct Node* newNode = createNode(data);
+    struct Node* temp = head;
+
+    for (int i = 1; i < pos - 1 && temp->next != NULL; i++) {
+        temp = temp->next;
+    }
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+
+// Display list
+void display() {
+    struct Node* temp = head;
+
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+}
+
+int main() {
+    int n, val;
+
+    scanf("%d", &n);
+
+    struct Node* tail = NULL;
+
+    // Create initial list
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &val);
+        struct Node* newNode = createNode(val);
+
+        if (head == NULL)
+            head = newNode;
+        else
+            tail->next = newNode;
+
+        tail = newNode;
+    }
+
+    int beginData, delPos, endData, pos, data;
+
+    scanf("%d", &beginData);
+    insertBeginning(beginData);
+
+    scanf("%d", &delPos);
+    deleteAtPosition(delPos);
+
+    scanf("%d", &endData);
+    insertEnd(endData);
+
+    scanf("%d %d", &pos, &data);
+    insertAtPosition(pos, data);
+
+    display();
+
+    return 0;
+}
